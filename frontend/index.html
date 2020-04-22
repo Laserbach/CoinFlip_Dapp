@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Casino</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./web3.min.js"></script>
+    <script type="text/javascript" src="./abi.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">CoinFlip Dapp</h1>
+        <p class="lead">Welcome to the Casino! </p>
+        Jackpot [ETH]: <span id="balance"></span><br>
+        <h2 id="result"></h2>
+      </div>
+    </div>
+    <div class="container">
+      <div>
+        <h2>Place your Bets </h2>
+        <p>Amount to bet [ETH]:</p>
+        <input type="number" style='width:5em' class="form-control" id="bet_input" placeholder="ETH" step="0.01" min="0.01" max="10" ><br>
+        <p>Heads or Tales?</p>
+        <label for="Heads"><input id="heads" type="radio" name="heads-or-tales" value="heads" checked> Heads</label>
+        <label for="Tales"><input id="tales" type="radio" name="heads-or-tales" value="tales"> Tales</label><br>
+        <button type="button" id="submit_bet_button" class="btn btn-primary">Place Bet</button>
+        <h3 id="result"></h3>
+      </div>
+      <div id="admin">
+        <h2>Admin Area</h2>
+        Owner: <span id="ownerAddress_output"></span>
+        <p>Fund the Contract [ETH]:</p>
+        <input type="number" style='width:5em' class="form-control" id="funding_input" placeholder="ETH" step="0.1" min="0.1" max="100" ><br>
+        <button type="button" id="fund_contract_button" class="btn btn-primary">Fund Contract</button>
+        <button type="button" id="withdraw_funds_button" class="btn btn-primary">Withdraw Funds</button>
+      </div>
+    </div>
+  </body>
+
+</html>
