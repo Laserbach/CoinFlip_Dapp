@@ -11,7 +11,7 @@ $(document).ready(function() {
     // which gets returned
 
     // abi is similiar to a header file
-    contractInstance = new web3.eth.Contract(abi, "0xe5f11d7C22e781dCC432163e1491bA04d76530d0", {from: accounts[0]});
+    contractInstance = new web3.eth.Contract(abi, "0x2a14824010F07379fE7532720d3FE2F5C0e7CFb0", {from: accounts[0]});
     console.log(contractInstance);
     address = accounts[0];
     getBalance();
@@ -24,6 +24,16 @@ $(document).ready(function() {
   $("#fund_contract_button").click(fundContract)
   // click listener for Get Data Button
   $("#withdraw_funds_button").click(widthdrawFunds)
+
+  //  Listening for Selected Account Changes
+  setInterval(async function() {
+    const accounts = await web3.eth.getAccounts();
+    if (accounts[0] !== address) {
+      address = accounts[0];
+      checkAdmin();
+    }
+  }, 100);
+
 });
 
 function flip(){
@@ -105,19 +115,24 @@ function fundContract() {
 }
 
 function widthdrawFunds() {
-  contractInstance.methods.withdrawAll().call().then(function(result){
+  contractInstance.methods.withdrawAll().send().then(function(result){
     result = web3.utils.fromWei(result, 'ether');
     alert("Balance withdrawn!")
     console.log(result);
   })
 }
 
+// Important! By default web3 calls the contract functions from account[0]
+// if you want that the frontend realises when you switched accounts, you need to pass the speciifc address in the function call
+
 function checkAdmin() {
-  contractInstance.methods.checkAdmin().call().then(function(result){
+  contractInstance.methods.checkAdmin().call({from: address}).then(function(result){
     if(result){
       $("#admin").show();
       $("#ownerAddress_output").html(address);
       //alert("Hi Boss!")
+    } else {
+      $("#admin").hide();
     }
   })
 }

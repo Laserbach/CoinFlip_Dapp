@@ -17,12 +17,15 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+// helps to sign transaction
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+// we use the infura-api which gives us access to a real ethereum node, which we need to deploy
+// a smart contract on the testnet or the mainnet. (instead of running our own ethereum node)
+const infuraKey = "85dfb5072d414c68b1d318f629a9c147";
+// library for reading files
+const fs = require('fs');
+// seed, which will be savely stored in an external file
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
@@ -60,14 +63,15 @@ module.exports = {
 
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    // ropsten: {
-      // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-      // network_id: 3,       // Ropsten's id
-      // gas: 5500000,        // Ropsten has a lower block limit than mainnet
-      // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-      // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // },
+     ropsten: {
+       // Add ID from as example infura
+       provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/204b9bc06b1248a090028e69d3c6d7b1`),
+       network_id: 3,       // Ropsten's id
+       gas: 5500000,        // Ropsten has a lower block limit than mainnet
+       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+     },
 
     // Useful for private networks
     // private: {
