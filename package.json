@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Laserbach/laser-stuff/issues"
   },
-  "homepage": "https://github.com/Laserbach/laser-stuff#readme"
+  "homepage": "https://github.com/Laserbach/laser-stuff#readme",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.34"
+  }
 }
