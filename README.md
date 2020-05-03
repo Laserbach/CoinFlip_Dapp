@@ -1,5 +1,3 @@
-# laser-stuff
+# CoinFlip_Dapp
 
-Hi there!
-
-Welcome to my repository! Follow the rabbit!
+Ethereum Testnet Dapp using external orcalce calls to generate random numbers
