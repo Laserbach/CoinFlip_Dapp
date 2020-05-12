@@ -26,7 +26,7 @@ contract Coinflip is Ownable, usingProvable {
   bytes32 queryId;
 
   function flip(bool bet) payable public {
-    // check if contract has enough balance
+    // check if contract has enough balance to cover a possible win
     require(msg.value <= balance);
     // Prevent users draining the contract with 0 Ether bets (oracle gas costs)
     require(msg.value >= 0.1 ether);
@@ -35,7 +35,8 @@ contract Coinflip is Ownable, usingProvable {
 
     Bet memory newBet;
     newBet.heads = bet;
-    newBet.stake = msg.value;
+    // the player will have to pay the fee that is required for calling the "random-oracle"
+    newBet.stake = msg.value - provable_getPrice("RANDOM");
     newBet.player = msg.sender;
 
     uint256 QUERY_EXECUTION_DELAY = 0;
@@ -76,18 +77,22 @@ contract Coinflip is Ownable, usingProvable {
     return playerBalances[player];
   }
 
-  function withdrawPlayer() public returns(uint) {
+  // this function is called from the fronten using .send()
+  // those .send() functions which are considred "setter-functions" never provide a return value
+  // To anyways retrieve a return value an event could be emitted
+  function withdrawPlayer() public{
     uint toTransfer = playerBalances[msg.sender];
     playerBalances[msg.sender] = 0;
     msg.sender.transfer(toTransfer);
-    return toTransfer;
   }
 
-  function withdrawAll() public onlyOwner returns(uint) {
+  // this function is called from the fronten using .send()
+  // those .send() functions which are considred "setter-functions" never provide a return value
+  // To anyways retrieve a return value an event could be emitted
+  function withdrawAll() public onlyOwner{
     uint toTransfer = balance;
     balance = 0;
     msg.sender.transfer(toTransfer);
-    return toTransfer;
   }
 
   function checkAdmin() public view returns(bool){
