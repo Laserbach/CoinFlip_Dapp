@@ -11,7 +11,7 @@ $(document).ready(function() {
     // which gets returned
 
     // abi is similiar to a header file
-    contractInstance = new web3.eth.Contract(abi, "0x9f0A3E669Ef37C95Fbbb8dC8B8c6ef2F643498E4", {from: accounts[0]});
+    contractInstance = new web3.eth.Contract(abi, "0x51f8FF864671ab0f5b58ae8a0390Fb524Ac74f6e", {from: accounts[0]});
     console.log(contractInstance);
     address = accounts[0];
     getBalance();
@@ -149,21 +149,19 @@ function getPlayerBalance() {
 }
 
 function widthdrawFunds() {
-  contractInstance.methods.withdrawAll().send({from: address}).then(function(result){
-    var amount = web3.utils.fromWei(result, 'ether');
-    alert("Balance withdrawn!")
-    console.log(amount);
-    getBalance();
-  })
+  contractInstance.methods.withdrawAll().send({from: address})
+    .on("receipt", function(receipt){
+      alert("Balance withdrawn!")
+      getBalance();
+    })
 }
 
 function widthdrawWinnings() {
-  contractInstance.methods.withdrawPlayer().send({from: address}).then(function(result){
-    var amount = web3.utils.fromWei(result, 'ether');
-    alert("Here is your reward!")
-    console.log(amount);
-    getPlayerBalance();
-  })
+  contractInstance.methods.withdrawPlayer().send({from: address})
+    .on("receipt", function(receipt){
+      alert("Here is your reward!")
+      getPlayerBalance();
+    })
 }
 
 // Important! By default web3 calls the contract functions from account[0]
